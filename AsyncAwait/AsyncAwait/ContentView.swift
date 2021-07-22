@@ -28,6 +28,13 @@ struct ContentView: View {
             }
             Spacer()
         }
+        .onAppear {
+            Task {
+                await updateUI()
+                
+            }
+           
+        }
     }
     
     private func updateUI() async {
@@ -39,7 +46,12 @@ struct ContentView: View {
         } catch {
             print("Failed to upload image")
         }
-        //
+        // stuff can happen here
+        description = await updateDescription()
+        // stuff can happen here too
+        imagesCount = await updateImageCount()
+        // stuff can happen here as well
+        isTextStackDisplayed = true
     }
     
     private func updateDescription() async -> String {
@@ -57,13 +69,10 @@ struct ContentView: View {
             return UIImage(data: data)
             
         } catch {
-            print("Failed to return image")
+            print("Faild uploading an image")
         }
-        
         return nil
     }
-    
-    
 }
     
 
